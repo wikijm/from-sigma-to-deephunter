@@ -1,7 +1,14 @@
 # from-sigma-to-deephunter
 ## Overview
 
-This repository contains the `sigma-to-deephunter.py` script, which downloads and processes SIGMA rules from a specified GitHub repository. The script extracts PowerQuery and SIGMA rule details and updates a JSON file with this information.
+This repository contains the `sigma-to-deephunter.py` script, which downloads and processes SIGMA rules from a specified GitHub repository.
+The script extracts PowerQuery and SIGMA rule details and updates a JSON file with this information.
+
+Source of Sigma rules is the official SigmaHQ repository https://github.com/SigmaHQ/sigma.
+
+Translation from Sigma to PowerQuery is made by GitHub Actions on https://github.com/wikijm/ConvertSigmaRepo2SentinelOnePQ/.
+
+DeepHunter is a tool with WebGUI to automatize execution of threat hunting queries in daily campaigns and collection of daily statistics (number of matching events, number of matching endpoints, etc). Repository is https://github.com/sebastiendamaye/deephunter and documentation is available on https://deephunter.readthedocs.io/en/latest/.
 
 ## Requirements
 To install the necessary dependencies, ensure you have `pip` installed and run:
