@@ -30,12 +30,22 @@ jobs:
       - name: Run the script
         run: python sigma-to-deephunter.py
 
-      # Commit and push changes if query.json is updated
+      # Authenticate GitHub Actions bot
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      # Pull latest changes
       - name: Pull latest changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: git pull origin main
-        
-      - name: Push changes
-        run: git push origin main
-        
-      - name: Commit and push translated process creation rules
+
+      # Commit and push changes if query.json is updated
+      - name: Commit and Push Changes
         uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update query.json"
+          branch: main
+          file_pattern: query.json
