@@ -31,10 +31,11 @@ jobs:
         run: python sigma-to-deephunter.py
 
       # Commit and push changes if query.json is updated
-      - name: Commit and push changes
-        run: |
-          git config --local user.name "${{ github.actor }}"
-          git config --local user.email "${{ github.actor }}@users.noreply.github.com"
-          git add query.json
-          git diff --cached --quiet || git commit -m "Update query.json via GitHub Actions"
-          git push
+      - name: Pull latest changes
+        run: git pull origin main
+        
+      - name: Push changes
+        run: git push origin main
+        
+      - name: Commit and push translated process creation rules
+        uses: stefanzweifel/git-auto-commit-action@v5
