@@ -93,6 +93,7 @@ jobs:
         run: |
           set -e
           echo "Using branch name: $BRANCH_NAME"
+          git pull
           git checkout -b "$BRANCH_NAME"
           git commit -m "chore: update query.json (run #${{ github.run_number }})" || echo "Nothing to commit"
           # Push branch to origin
