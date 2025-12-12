@@ -13,8 +13,12 @@ jobs:
 
     steps:
       # Checkout the repository
-      - name: Checkout repository
+      - name: Checkout repository (with LFS)
         uses: actions/checkout@v4.2.0
+        with:
+          lfs: true
+          fetch-depth: 0
+          persist-credentials: true
 
       # Set up Python
       - name: Set up Python
@@ -28,6 +32,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Install Git LFS and track query.json
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git-lfs
+          git lfs install --local
+          git lfs track "query.json"
+          git add .gitattributes query.json
+      
       # Run the sigma-to-deephunter.py script
       - name: Run the script
         run: python sigma-to-deephunter.py
@@ -51,3 +63,16 @@ jobs:
           commit_message: "Update query.json"
           branch: main
           file_pattern: query.json
+
+
+
+
+
+
+
+      - name: Commit & push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Add Git LFS tracking for query.json
+          file_pattern: query.json,.gitattributes
+          push_options: ""
