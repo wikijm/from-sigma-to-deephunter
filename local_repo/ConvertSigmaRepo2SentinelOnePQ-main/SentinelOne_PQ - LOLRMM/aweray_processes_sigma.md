@@ -1,0 +1,37 @@
+```sql
+// Translated content (automatically translated on 22-12-2025 00:58:15):
+event.type="Process Creation" and (endpoint.os="windows" and ((src.process.image.path="*aweray_remote*.exe" or src.process.image.path contains "AweSun.exe") or (tgt.process.image.path="*aweray_remote*.exe" or tgt.process.image.path contains "AweSun.exe")))
+```
+
+
+# Original Sigma Rule:
+```yaml
+title: Potential AweRay RMM Tool Process Activity
+id: b57062f2-1916-44dd-9ea0-4e96e06f7721
+status: experimental
+description: |
+    Detects potential processes activity of AweRay RMM tool
+references:
+    - https://github.com/magicsword-io/LOLRMM
+author: LOLRMM Project
+date: 2025-12-01
+tags:
+    - attack.execution
+    - attack.t1219
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection_parent:
+        ParentImage|endswith:
+            - aweray_remote*.exe
+            - AweSun.exe
+    selection_image:
+        Image|endswith:
+            - aweray_remote*.exe
+            - AweSun.exe
+    condition: 1 of selection_*
+falsepositives:
+    - Legitimate use of AweRay
+level: medium
+```

@@ -1,0 +1,40 @@
+```sql
+// Translated content (automatically translated on 22-12-2025 01:02:22):
+event.type="Process Creation" and (endpoint.os="linux" and (tgt.process.image.path contains "/ls" and (tgt.process.cmdline contains " /" or tgt.process.cmdline contains " / ") and tgt.process.cmdline matches "(?:\\s-[^-\\s]{0,20}i|\\s--inode\\s)" and tgt.process.cmdline matches "(?:\\s-[^-\\s]{0,20}d|\\s--directory\\s)"))
+```
+
+
+# Original Sigma Rule:
+```yaml
+title: Potential Container Discovery Via Inodes Listing
+id: 43e26eb5-cd58-48d1-8ce9-a273f5d298d8
+status: test
+description: Detects listing of the inodes of the "/" directory to determine if the we are running inside of a container.
+references:
+    - https://blog.skyplabs.net/posts/container-detection/
+    - https://stackoverflow.com/questions/20010199/how-to-determine-if-a-process-runs-inside-lxc-docker
+tags:
+    - attack.discovery
+    - attack.t1082
+author: Seth Hanford
+date: 2023-08-23
+modified: 2025-11-24
+logsource:
+    category: process_creation
+    product: linux
+detection:
+    selection_ls_img:
+        Image|endswith: '/ls'    # inode outside containers low, inside high
+    selection_ls_cli:
+        - CommandLine|endswith: ' /'
+        - CommandLine|contains: ' / '
+    selection_regex_inode:
+        CommandLine|re: '(?:\s-[^-\s]{0,20}i|\s--inode\s)'      # -i finds inode number
+    selection_regex_dir:
+        CommandLine|re: '(?:\s-[^-\s]{0,20}d|\s--directory\s)'  # -d gets directory itself, not contents
+    condition: all of selection_*
+falsepositives:
+    - Legitimate system administrator usage of these commands
+    - Some container tools or deployments may use these techniques natively to determine how they proceed with execution, and will need to be filtered
+level: low
+```

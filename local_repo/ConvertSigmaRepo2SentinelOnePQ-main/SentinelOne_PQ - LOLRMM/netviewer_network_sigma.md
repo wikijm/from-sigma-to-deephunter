@@ -1,0 +1,31 @@
+```sql
+// Translated content (automatically translated on 22-12-2025 00:58:15):
+(event.category in ("dns","url","ip")) and (endpoint.os="windows" and (url.address contains "download.cnet.com/Net-Viewer/3000-2370_4-10034828.html" or event.dns.request contains "download.cnet.com/Net-Viewer/3000-2370_4-10034828.html"))
+```
+
+
+# Original Sigma Rule:
+```yaml
+title: Potential Netviewer RMM Tool Network Activity
+id: 486d8388-79a5-4f53-91ee-a815559c5a9e
+status: experimental
+description: |
+    Detects potential network activity of Netviewer RMM tool
+references:
+    - https://github.com/magicsword-io/LOLRMM
+author: LOLRMM Project
+date: 2025-12-01
+tags:
+    - attack.execution
+    - attack.t1219
+logsource:
+    product: windows
+    category: network_connection
+detection:
+    selection:
+        DestinationHostname|endswith: download.cnet.com/Net-Viewer/3000-2370_4-10034828.html
+    condition: selection
+falsepositives:
+    - Legitimate use of Netviewer
+level: medium
+```

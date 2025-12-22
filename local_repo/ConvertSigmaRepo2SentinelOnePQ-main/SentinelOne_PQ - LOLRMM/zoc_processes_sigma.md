@@ -1,0 +1,33 @@
+```sql
+// Translated content (automatically translated on 22-12-2025 00:58:15):
+event.type="Process Creation" and (endpoint.os="windows" and (src.process.image.path contains "zoc.exe" or tgt.process.image.path contains "zoc.exe"))
+```
+
+
+# Original Sigma Rule:
+```yaml
+title: Potential ZOC RMM Tool Process Activity
+id: 0f2f8d37-6bf4-4d16-ba82-1634921d95c4
+status: experimental
+description: |
+    Detects potential processes activity of ZOC RMM tool
+references:
+    - https://github.com/magicsword-io/LOLRMM
+author: LOLRMM Project
+date: 2025-12-01
+tags:
+    - attack.execution
+    - attack.t1219
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection_parent:
+        ParentImage|endswith: zoc.exe
+    selection_image:
+        Image|endswith: zoc.exe
+    condition: 1 of selection_*
+falsepositives:
+    - Legitimate use of ZOC
+level: medium
+```

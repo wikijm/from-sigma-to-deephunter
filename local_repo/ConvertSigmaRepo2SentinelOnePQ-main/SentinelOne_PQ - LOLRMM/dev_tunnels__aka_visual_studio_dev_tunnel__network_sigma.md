@@ -1,0 +1,31 @@
+```sql
+// Translated content (automatically translated on 22-12-2025 00:58:15):
+(event.category in ("dns","url","ip")) and (endpoint.os="windows" and (url.address contains "learn.microsoft.com/en-us/azure/developer/dev-tunnels/overview" or event.dns.request contains "learn.microsoft.com/en-us/azure/developer/dev-tunnels/overview"))
+```
+
+
+# Original Sigma Rule:
+```yaml
+title: Potential Dev Tunnels (aka Visual Studio Dev Tunnel) RMM Tool Network Activity
+id: 0d2e5351-66d9-4054-98f3-15492cdb8d64
+status: experimental
+description: |
+    Detects potential network activity of Dev Tunnels (aka Visual Studio Dev Tunnel) RMM tool
+references:
+    - https://github.com/magicsword-io/LOLRMM
+author: LOLRMM Project
+date: 2025-12-01
+tags:
+    - attack.execution
+    - attack.t1219
+logsource:
+    product: windows
+    category: network_connection
+detection:
+    selection:
+        DestinationHostname|endswith: learn.microsoft.com/en-us/azure/developer/dev-tunnels/overview
+    condition: selection
+falsepositives:
+    - Legitimate use of Dev Tunnels (aka Visual Studio Dev Tunnel)
+level: medium
+```

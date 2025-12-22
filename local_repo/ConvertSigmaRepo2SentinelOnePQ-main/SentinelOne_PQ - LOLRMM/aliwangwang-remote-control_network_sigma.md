@@ -1,0 +1,31 @@
+```sql
+// Translated content (automatically translated on 22-12-2025 00:58:15):
+(event.category in ("dns","url","ip")) and (endpoint.os="windows" and (url.address contains "wangwang.taobao.com" or event.dns.request contains "wangwang.taobao.com"))
+```
+
+
+# Original Sigma Rule:
+```yaml
+title: Potential AliWangWang-remote-control RMM Tool Network Activity
+id: 20416554-81e2-4d2b-a643-5838ceaed775
+status: experimental
+description: |
+    Detects potential network activity of AliWangWang-remote-control RMM tool
+references:
+    - https://github.com/magicsword-io/LOLRMM
+author: LOLRMM Project
+date: 2025-12-01
+tags:
+    - attack.execution
+    - attack.t1219
+logsource:
+    product: windows
+    category: network_connection
+detection:
+    selection:
+        DestinationHostname|endswith: wangwang.taobao.com
+    condition: selection
+falsepositives:
+    - Legitimate use of AliWangWang-remote-control
+level: medium
+```

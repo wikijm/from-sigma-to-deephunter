@@ -1,0 +1,39 @@
+```sql
+// Translated content (automatically translated on 22-12-2025 00:58:15):
+event.type="Process Creation" and (endpoint.os="windows" and ((src.process.image.path contains "clientmrinit.exe" or src.process.image.path contains "mgntsvc.exe" or src.process.image.path contains "routernt.exe") or (tgt.process.image.path contains "clientmrinit.exe" or tgt.process.image.path contains "mgntsvc.exe" or tgt.process.image.path contains "routernt.exe")))
+```
+
+
+# Original Sigma Rule:
+```yaml
+title: Potential Sophos-Remote Management System RMM Tool Process Activity
+id: abca1601-eeac-4683-a666-e8ba592e46e3
+status: experimental
+description: |
+    Detects potential processes activity of Sophos-Remote Management System RMM tool
+references:
+    - https://github.com/magicsword-io/LOLRMM
+author: LOLRMM Project
+date: 2025-12-01
+tags:
+    - attack.execution
+    - attack.t1219
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection_parent:
+        ParentImage|endswith:
+            - clientmrinit.exe
+            - mgntsvc.exe
+            - routernt.exe
+    selection_image:
+        Image|endswith:
+            - clientmrinit.exe
+            - mgntsvc.exe
+            - routernt.exe
+    condition: 1 of selection_*
+falsepositives:
+    - Legitimate use of Sophos-Remote Management System
+level: medium
+```

@@ -1,0 +1,31 @@
+```sql
+// Translated content (automatically translated on 22-12-2025 00:58:15):
+(event.category in ("dns","url","ip")) and (endpoint.os="windows" and (url.address contains "imperosoftware.com/impero-connect/" or event.dns.request contains "imperosoftware.com/impero-connect/"))
+```
+
+
+# Original Sigma Rule:
+```yaml
+title: Potential Netop Remote Control (aka Impero Connect) RMM Tool Network Activity
+id: 3edeb103-6164-49d5-a513-24025e8d9862
+status: experimental
+description: |
+    Detects potential network activity of Netop Remote Control (aka Impero Connect) RMM tool
+references:
+    - https://github.com/magicsword-io/LOLRMM
+author: LOLRMM Project
+date: 2025-12-01
+tags:
+    - attack.execution
+    - attack.t1219
+logsource:
+    product: windows
+    category: network_connection
+detection:
+    selection:
+        DestinationHostname|endswith: imperosoftware.com/impero-connect/
+    condition: selection
+falsepositives:
+    - Legitimate use of Netop Remote Control (aka Impero Connect)
+level: medium
+```

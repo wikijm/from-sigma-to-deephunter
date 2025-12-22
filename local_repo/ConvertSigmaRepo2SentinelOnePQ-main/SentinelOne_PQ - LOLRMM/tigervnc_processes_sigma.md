@@ -1,0 +1,39 @@
+```sql
+// Translated content (automatically translated on 22-12-2025 00:58:15):
+event.type="Process Creation" and (endpoint.os="windows" and ((src.process.image.path="*tigervnc*.exe" or src.process.image.path contains "winvnc4.exe" or src.process.image.path contains "tvnserver.exe") or (tgt.process.image.path="*tigervnc*.exe" or tgt.process.image.path contains "winvnc4.exe" or tgt.process.image.path contains "tvnserver.exe")))
+```
+
+
+# Original Sigma Rule:
+```yaml
+title: Potential TigerVNC RMM Tool Process Activity
+id: 0ccac845-e3f8-4479-86da-765ff423cf0e
+status: experimental
+description: |
+    Detects potential processes activity of TigerVNC RMM tool
+references:
+    - https://github.com/magicsword-io/LOLRMM
+author: LOLRMM Project
+date: 2025-12-01
+tags:
+    - attack.execution
+    - attack.t1219
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection_parent:
+        ParentImage|endswith:
+            - tigervnc*.exe
+            - winvnc4.exe
+            - tvnserver.exe
+    selection_image:
+        Image|endswith:
+            - tigervnc*.exe
+            - winvnc4.exe
+            - tvnserver.exe
+    condition: 1 of selection_*
+falsepositives:
+    - Legitimate use of TigerVNC
+level: medium
+```

@@ -1,0 +1,37 @@
+```sql
+// Translated content (automatically translated on 22-12-2025 00:58:15):
+event.type="Process Creation" and (endpoint.os="windows" and ((src.process.image.path contains "Duplicati.Server.exe" or src.process.image.path contains "Duplicati.Server.exe") or (tgt.process.image.path contains "Duplicati.Server.exe" or tgt.process.image.path contains "Duplicati.Server.exe")))
+```
+
+
+# Original Sigma Rule:
+```yaml
+title: Potential Duplicati RMM Tool Process Activity
+id: 9246a25b-e2de-4756-ad67-a9d3f2f798e6
+status: experimental
+description: |
+    Detects potential processes activity of Duplicati RMM tool
+references:
+    - https://github.com/magicsword-io/LOLRMM
+author: LOLRMM Project
+date: 2025-12-01
+tags:
+    - attack.execution
+    - attack.t1219
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection_parent:
+        ParentImage|endswith:
+            - Duplicati.Server.exe
+            - Duplicati.Server.exe
+    selection_image:
+        Image|endswith:
+            - Duplicati.Server.exe
+            - Duplicati.Server.exe
+    condition: 1 of selection_*
+falsepositives:
+    - Legitimate use of Duplicati
+level: medium
+```

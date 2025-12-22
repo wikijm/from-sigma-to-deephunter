@@ -1,0 +1,39 @@
+```sql
+// Translated content (automatically translated on 22-12-2025 00:58:15):
+event.type="Process Creation" and (endpoint.os="windows" and ((src.process.image.path contains "crossloopservice.exe" or src.process.image.path contains "CrossLoopConnect.exe" or src.process.image.path contains "WinVNCStub.exe") or (tgt.process.image.path contains "crossloopservice.exe" or tgt.process.image.path contains "CrossLoopConnect.exe" or tgt.process.image.path contains "WinVNCStub.exe")))
+```
+
+
+# Original Sigma Rule:
+```yaml
+title: Potential CrossLoop RMM Tool Process Activity
+id: b59a1213-6778-4ba7-b466-15a04a64d532
+status: experimental
+description: |
+    Detects potential processes activity of CrossLoop RMM tool
+references:
+    - https://github.com/magicsword-io/LOLRMM
+author: LOLRMM Project
+date: 2025-12-01
+tags:
+    - attack.execution
+    - attack.t1219
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection_parent:
+        ParentImage|endswith:
+            - crossloopservice.exe
+            - CrossLoopConnect.exe
+            - WinVNCStub.exe
+    selection_image:
+        Image|endswith:
+            - crossloopservice.exe
+            - CrossLoopConnect.exe
+            - WinVNCStub.exe
+    condition: 1 of selection_*
+falsepositives:
+    - Legitimate use of CrossLoop
+level: medium
+```

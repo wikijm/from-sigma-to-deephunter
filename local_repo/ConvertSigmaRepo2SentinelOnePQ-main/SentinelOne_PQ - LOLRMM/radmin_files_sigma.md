@@ -1,0 +1,35 @@
+```sql
+// Translated content (automatically translated on 22-12-2025 00:58:15):
+event.category="file" and (endpoint.os="windows" and (tgt.file.path contains "C:\\Windows\\SysWOW64\\rserver30\\Radm_log.htm" or tgt.file.path contains "C:\\Windows\\System32\\rserver30\\Radm_log.htm" or tgt.file.path contains "C:\\Windows\\System32\\rserver30\\CHATLOGS\*\*.htm" or tgt.file.path contains "C:\\Users\*\\Documents\\ChatLogs\*\*.htm"))
+```
+
+
+# Original Sigma Rule:
+```yaml
+title: Potential RAdmin RMM Tool File Activity
+id: 1dbf8a1b-b0a9-41dd-bffc-550ccf0968c9
+status: experimental
+description: |
+    Detects potential files activity of RAdmin RMM tool
+references:
+    - https://github.com/magicsword-io/LOLRMM
+author: LOLRMM Project
+date: 2025-12-01
+tags:
+    - attack.execution
+    - attack.t1219
+logsource:
+    product: windows
+    category: file_event
+detection:
+    selection:
+        TargetFilename|endswith:
+            - C:\Windows\SysWOW64\rserver30\Radm_log.htm
+            - C:\Windows\System32\rserver30\Radm_log.htm
+            - C:\Windows\System32\rserver30\CHATLOGS\*\*.htm
+            - C:\Users\*\Documents\ChatLogs\*\*.htm
+    condition: selection
+falsepositives:
+    - Legitimate use of RAdmin
+level: medium
+```

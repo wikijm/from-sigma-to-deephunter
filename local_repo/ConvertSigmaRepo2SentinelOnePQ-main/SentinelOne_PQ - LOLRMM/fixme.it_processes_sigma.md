@@ -1,0 +1,53 @@
+```sql
+// Translated content (automatically translated on 22-12-2025 00:58:15):
+event.type="Process Creation" and (endpoint.os="windows" and ((src.process.image.path contains "FixMeit Client.exe" or src.process.image.path contains "TiExpertStandalone.exe" or src.process.image.path="*FixMeitClient*.exe" or src.process.image.path contains "TiExpertCore.exe" or src.process.image.path contains "FixMeit Unattended Access Setup.exe" or src.process.image.path contains "FixMeit Expert Setup.exe" or src.process.image.path contains "TiExpertCore.exe" or src.process.image.path contains "fixmeitclient.exe" or src.process.image.path contains "TiClientCore.exe" or src.process.image.path="*TiClientHelper*.exe") or (tgt.process.image.path contains "FixMeit Client.exe" or tgt.process.image.path contains "TiExpertStandalone.exe" or tgt.process.image.path="*FixMeitClient*.exe" or tgt.process.image.path contains "TiExpertCore.exe" or tgt.process.image.path contains "FixMeit Unattended Access Setup.exe" or tgt.process.image.path contains "FixMeit Expert Setup.exe" or tgt.process.image.path contains "TiExpertCore.exe" or tgt.process.image.path contains "fixmeitclient.exe" or tgt.process.image.path contains "TiClientCore.exe" or tgt.process.image.path="*TiClientHelper*.exe")))
+```
+
+
+# Original Sigma Rule:
+```yaml
+title: Potential FixMe.it RMM Tool Process Activity
+id: cbaa410d-82f2-4039-86cf-2fb13ab6bb75
+status: experimental
+description: |
+    Detects potential processes activity of FixMe.it RMM tool
+references:
+    - https://github.com/magicsword-io/LOLRMM
+author: LOLRMM Project
+date: 2025-12-01
+tags:
+    - attack.execution
+    - attack.t1219
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection_parent:
+        ParentImage|endswith:
+            - FixMeit Client.exe
+            - TiExpertStandalone.exe
+            - FixMeitClient*.exe
+            - TiExpertCore.exe
+            - FixMeit Unattended Access Setup.exe
+            - FixMeit Expert Setup.exe
+            - TiExpertCore.exe
+            - fixmeitclient.exe
+            - TiClientCore.exe
+            - TiClientHelper*.exe
+    selection_image:
+        Image|endswith:
+            - FixMeit Client.exe
+            - TiExpertStandalone.exe
+            - FixMeitClient*.exe
+            - TiExpertCore.exe
+            - FixMeit Unattended Access Setup.exe
+            - FixMeit Expert Setup.exe
+            - TiExpertCore.exe
+            - fixmeitclient.exe
+            - TiClientCore.exe
+            - TiClientHelper*.exe
+    condition: 1 of selection_*
+falsepositives:
+    - Legitimate use of FixMe.it
+level: medium
+```

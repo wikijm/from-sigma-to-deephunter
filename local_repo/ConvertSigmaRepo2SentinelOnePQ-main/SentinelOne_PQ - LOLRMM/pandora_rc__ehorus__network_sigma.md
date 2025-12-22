@@ -1,0 +1,31 @@
+```sql
+// Translated content (automatically translated on 22-12-2025 00:58:15):
+(event.category in ("dns","url","ip")) and (endpoint.os="windows" and (url.address contains "portal.ehorus.com" or event.dns.request contains "portal.ehorus.com"))
+```
+
+
+# Original Sigma Rule:
+```yaml
+title: Potential Pandora RC (eHorus) RMM Tool Network Activity
+id: 25478da8-31ae-46a8-8002-2844a02a9517
+status: experimental
+description: |
+    Detects potential network activity of Pandora RC (eHorus) RMM tool
+references:
+    - https://github.com/magicsword-io/LOLRMM
+author: LOLRMM Project
+date: 2025-12-01
+tags:
+    - attack.execution
+    - attack.t1219
+logsource:
+    product: windows
+    category: network_connection
+detection:
+    selection:
+        DestinationHostname|endswith: portal.ehorus.com
+    condition: selection
+falsepositives:
+    - Legitimate use of Pandora RC (eHorus)
+level: medium
+```

@@ -1,0 +1,41 @@
+```sql
+// Translated content (automatically translated on 22-12-2025 00:58:15):
+event.type="Process Creation" and (endpoint.os="windows" and ((src.process.image.path contains "hsloader.exe" or src.process.image.path contains "ihcserver.exe" or src.process.image.path contains "instanthousecall.exe" or src.process.image.path contains "instanthousecall.exe") or (tgt.process.image.path contains "hsloader.exe" or tgt.process.image.path contains "ihcserver.exe" or tgt.process.image.path contains "instanthousecall.exe" or tgt.process.image.path contains "instanthousecall.exe")))
+```
+
+
+# Original Sigma Rule:
+```yaml
+title: Potential Instant Housecall RMM Tool Process Activity
+id: d1610f9a-a13c-4033-80f5-695b87d8506c
+status: experimental
+description: |
+    Detects potential processes activity of Instant Housecall RMM tool
+references:
+    - https://github.com/magicsword-io/LOLRMM
+author: LOLRMM Project
+date: 2025-12-01
+tags:
+    - attack.execution
+    - attack.t1219
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection_parent:
+        ParentImage|endswith:
+            - hsloader.exe
+            - ihcserver.exe
+            - instanthousecall.exe
+            - instanthousecall.exe
+    selection_image:
+        Image|endswith:
+            - hsloader.exe
+            - ihcserver.exe
+            - instanthousecall.exe
+            - instanthousecall.exe
+    condition: 1 of selection_*
+falsepositives:
+    - Legitimate use of Instant Housecall
+level: medium
+```
