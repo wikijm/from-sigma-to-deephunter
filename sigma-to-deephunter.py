@@ -121,7 +121,7 @@ if __name__ == "__main__":
                         "pub_date": "2023-03-16T08:02:46.204Z",
                         "pub_status": "DIST",
                         "query": powerquery,
-                        "references": "https://theitbros.com/using-psexec-to-run-commands-remotely/, https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/",
+                        "references": "",
                         "relevance": 1,
                         "run_daily": True,
                         "star_rule": False,

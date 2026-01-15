@@ -1,0 +1,51 @@
+name: Update query.json
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+permissions:
+  contents: write   # allow workflow to push/modify repository contents
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run update script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/update_query.py
+
+      # Example commit/push step — adapt to whichever action you use:
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "ci: update query.json"
+          file_pattern: query.json
+          branch: ${{ github.ref_name }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      # If you use peter-evans/create-pull-request, provide `token` input:
+      # - name: Create Pull Request
+      #   uses: peter-evans/create-pull-request@v5
+      #   with:
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     commit-message: "ci: update query.json"
+      #     title: "Update query.json"
+      #     branch: update-query-json
