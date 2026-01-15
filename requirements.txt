@@ -1,4 +1,4 @@
 gitpython
 pyyaml
 sigma-cli
-pyyaml
+urllib3 >= 2.6.3
