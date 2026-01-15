@@ -1,4 +1,7 @@
 # from-sigma-to-deephunter
+
+[![.github/workflows/update-query.yml](https://github.com/wikijm/from-sigma-to-deephunter/actions/workflows/update-query.yml/badge.svg)](https://github.com/wikijm/from-sigma-to-deephunter/actions/workflows/update-query.yml)
+
 ## Overview
 
 This repository contains the `sigma-to-deephunter.py` script, which downloads and processes SIGMA rules from a specified GitHub repository.

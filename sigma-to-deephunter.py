@@ -118,7 +118,7 @@ if __name__ == "__main__":
                         "mitre_techniques": mitre_techniques,
                         "name": title,
                         "notes": "",
-                        "pub_date": "2023-03-16T08:02:46.204Z",
+                        "pub_date": "",
                         "pub_status": "DIST",
                         "query": powerquery,
                         "references": "",
