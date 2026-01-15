@@ -30,7 +30,7 @@ jobs:
       - name: Run update script
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python scripts/update_query.py
+        run: python sigma-to-deephunter.py
 
       # Example commit/push step — adapt to whichever action you use:
       - name: Commit and push changes
@@ -39,7 +39,6 @@ jobs:
           commit_message: "ci: update query.json"
           file_pattern: query.json
           branch: ${{ github.ref_name }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       # If you use peter-evans/create-pull-request, provide `token` input:
       # - name: Create Pull Request
