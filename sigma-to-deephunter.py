@@ -75,11 +75,6 @@ def parse_sigma_rule(sigma_rule):
 
 # Function to create or update the query.json file
 def update_query_json(entries):
-    if os.path.exists(QUERY_JSON_PATH):
-        with open(QUERY_JSON_PATH, 'r') as json_file:
-            existing_entries = json.load(json_file)
-            entries.extend(existing_entries)
-
     with open(QUERY_JSON_PATH, 'w') as json_file:
         json.dump(entries, json_file, indent=4)
 
